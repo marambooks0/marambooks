@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Maram Books</title>
+  <meta name="description" content="Maram Books - A professional digital library for English books.">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f0f0;
+    }
+
+    header {
+      background-color: #3A6BA5;
+      color: white;
+      padding: 1em;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1em;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .search-bar {
+      padding: 1em;
+      text-align: center;
+    }
+
+    .search-bar input {
+      width: 50%;
+      padding: 0.5em;
+    }
+
+    .categories, .books {
+      padding: 1em;
+    }
+
+    .category-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .category {
+      background-color: #E07BAE;
+      color: white;
+      padding: 1em;
+      border-radius: 5px;
+    }
+
+    .book-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1em;
+    }
+
+    .book {
+      background-color: white;
+      padding: 1em;
+      border-radius: 5px;
+      width: 220px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .book h3 {
+      margin-top: 0;
+    }
+
+    .book button {
+      margin-top: 0.5em;
+      padding: 0.4em 0.8em;
+      border: none;
+      background-color: #3A6BA5;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .book button:hover {
+      background-color: #2d4e80;
+    }
+
+    footer {
+      background-color: #3A6BA5;
+      color: white;
+      text-align: center;
+      padding: 1em;
+      margin-top: 2em;
+    }
+
+    .contact-us {
+      margin-bottom: 1em;
+    }
+
+    @media (max-width: 600px) {
+      .search-bar input {
+        width: 90%;
+      }
+
+      .category-list, .book-list {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .book {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Maram Books</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Categories</a></li>
+        <li><a href="#">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="search-bar">
+      <input type="text" id="searchInput" placeholder="Search books..." />
+    </section>
+
+    <section class="categories">
+      <h2>Categories</h2>
+      <div class="category-list">
+        <div class="category">Novels</div>
+        <div class="category">Science</div>
+        <div class="category">History</div>
+        <div class="category">Psychology</div>
+        <div class="category">Fantasy</div>
+      </div>
+    </section>
+
+    <section class="books">
+      <h2>Books</h2>
+      <div class="book-list" id="bookList">
+        <!-- Books will be injected here -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <section class="contact-us">
+      <h2>Contact Us</h2>
+      <p>Email: contact@marambooks.com</p>
+    </section>
+    <p>&copy; 2025 Maram Books. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const books = [
+      {
+        title: "The Great Gatsby",
+        category: "Novels",
+        description: "A novel by F. Scott Fitzgerald.",
+      },
+      {
+        title: "A Brief History of Time",
+        category: "Science",
+        description: "A book by Stephen Hawking.",
+      },
+      {
+        title: "Sapiens: A Brief History of Humankind",
+        category: "History",
+        description: "A book by Yuval Noah Harari.",
+      },
+      {
+        title: "Thinking, Fast and Slow",
+        category: "Psychology",
+        description: "A book by Daniel Kahneman.",
+      },
+      {
+        title: "Harry Potter and the Sorcerer's Stone",
+        category: "Fantasy",
+        description: "A novel by J.K. Rowling.",
+      }
+    ];
+
+    const bookList = document.getElementById("bookList");
+    const searchInput = document.getElementById("searchInput");
+
+    function displayBooks(filteredBooks) {
+      bookList.innerHTML = "";
+      filteredBooks.forEach((book) => {
+        const bookDiv = document.createElement("div");
+        bookDiv.className = "book";
+        bookDiv.innerHTML = `
+          <h3>${book.title}</h3>
+          <p><strong>Category:</strong> ${book.category}</p>
+          <p>${book.description}</p>
+          <button>Read Online</button>
+          <button>Download</button>
+        `;
+        bookList.appendChild(bookDiv);
+      });
+    }
+
+    searchInput.addEventListener("input", () => {
+      const query = searchInput.value.toLowerCase();
+      const filteredBooks = books.filter(
+        (book) =>
+          book.title.toLowerCase().includes(query) ||
+          book.category.toLowerCase().includes(query)
+      );
+      displayBooks(filteredBooks);
+    });
+
+    displayBooks(books);
+  </script>
+</body>
+</html>
